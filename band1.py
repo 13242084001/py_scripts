@@ -337,7 +337,8 @@ def prettyPrint():
     str9_2 = ' '*(lenStr4//2 - len(str9_1))
     str9_3 = gol.get_value('packet loss')
     str9 = str9_1 + str9_2 + str9_3
-    return str1,str2,str3,str4,str5,str6,str7,str8,str9
+    str10 = ' '
+    return str1,str2,str3,str4,str5,str6,str7,str8,str9,str10
 
 class init_scr(object):
     #_instance = None
@@ -392,7 +393,7 @@ class init_scr(object):
             time.sleep(1)
 
     def endWin(self):
-        print(self.__stdscr)
+        #print(self.__stdscr)
         self.__stdscr.keypad(0)
         curses.echo()
         curses.nocbreak()
@@ -404,7 +405,6 @@ def main():
     cpprint(options_dict)
     tc_handle(**options_dict)()
     gol._init()
-    #initScr()
     t = threading.Thread(target=exec, args=())
     t.setDaemon(True)
     t.start()
@@ -416,7 +416,6 @@ def main():
 def signal_handle(signum, frame):
     is_active = False
     win.endWin()
-    #print(signum)
     sys.exit(signum)
 
 if __name__ == "__main__":
