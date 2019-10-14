@@ -50,6 +50,9 @@ tips_dict = {RTM_NEWROUTE: 'ADD ROUTE ', RTM_DELROUTE: 'DELETE ROUTE', RTM_NEWLI
 def get_ipv4_ip(hex_ip):
     return ".".join([str(int(i, 16)) for i in re.findall(r'.{2}', hex_ip)])
 
+def get_mac(hex_mac):
+    return ":".join(re.findall(r'.{2}', hex_mac))
+
 
 class NetStat(object):
 	
@@ -90,13 +93,13 @@ class NetStat(object):
         if self.rta_type == IFLA_IFNAME:
             print("nic is %s" % self.rta_data.decode())
         elif self.rta_type == 1:
-            print('mac addr is %s' % self.rta_data.hex())
+            print('mac addr is %s' % get_mac(self.rta_data.hex()))
         elif self.rta_type == 4:
             print('mtu is %s' % struct.unpack('I', self.rta_data))
         elif self.rta_type == 6:
             print('qdisc is %s' % self.rta_data.decode())
         elif self.rta_type == 2:
-            print('broadcast addr is %s' % self.rta_data.hex())
+            print('broadcast addr is %s' % get_mac(self.rta_data.hex()))
 
     def ifaddr(self):
         if self.rta_type == 1:
